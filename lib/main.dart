@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plog/pages/register_page.dart';
 import 'package:plog/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
 
