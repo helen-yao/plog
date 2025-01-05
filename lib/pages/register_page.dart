@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:plog/components/my_button.dart';
 import 'package:plog/components/my_textfield.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
 
-  const LoginPage({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
 
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();  
+  final TextEditingController confirmPasswordController = TextEditingController();  
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +28,11 @@ class _LoginPageState extends State<LoginPage> {
         children: [
         // logo
 
-        // login to start plogging
+        // Register to start plogging
         const SizedBox(height:25),
 
         Text(
-          "Login to start plogging!", 
+          "Sign up to start plogging!", 
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 16,
@@ -58,6 +60,15 @@ class _LoginPageState extends State<LoginPage> {
 
         const SizedBox(height:10),
 
+        //confirm pasword
+        MyTextField(
+          controller: confirmPasswordController, 
+          hintText: "Confirm password", 
+          obscureText: true,
+        ),
+
+        const SizedBox(height:10),
+
         // sign in button
         MyButton(text: "Sign in", onTap: () {}),
 
@@ -67,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Don't have an account?", 
+            Text("Already have an account?", 
               style: TextStyle(
                 color: Theme.of(context).colorScheme.inversePrimary,
               )
@@ -75,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(width: 4),
             GestureDetector(
               onTap: widget.onTap,
-              child: Text("Sign up here!",
+              child: Text("Sign in here!",
                   style: TextStyle(
                   color: Theme.of(context).colorScheme.inversePrimary,
                   fontWeight: FontWeight.bold,
