@@ -28,10 +28,10 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Plog'),
     );
   }
 }
@@ -55,18 +55,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  int _currentIndex = 0;
+  final List<Widget> _screens = [
+    HomeScreen(),
+    RecordScreen(),
+    ProfileScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -86,40 +80,120 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      body: _screens[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.radio_button_checked),
+            label: 'Record',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  final Map<int, dynamic> _userData = {
+    0: {
+      'name': 'Helen',
+      'time_elapsed': 21,
+      'completed': false,
+      'date': '12/1/2003',
+      'title': 'Santorini',
+      'description': 'The sky was really diffcult',
+      'pace': 200
+    },
+    1: {
+      'name': 'Larissa',
+      'time_elapsed': 21,
+      'completed': false,
+      'date': '1/5/2025',
+      'title': 'The Great Gatsby',
+      'description': 'Super fun puzzle',
+      'pace': 30
+    }
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: SingleChildScrollView(
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        physics: ScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: 2,
+        itemBuilder: (context, position) {
+          return Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0),
+            ),
+            child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                // child: Text(
+                //   _userData[position]['name'].toString(),
+                //   style: TextStyle(fontSize: 22.0),
+                // ),
+                child: Column(
+                  children: [
+                    Text(_userData[position]['name'].toString()),
+                    Text("${_userData[position]['title']}",
+                        style: TextStyle(fontSize: 30)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                      Column(
+                        children: [
+                          Text("Time"),
+                          Text(_userData[position]['time_elapsed'].toString())
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text("Completed"),
+                          Text(_userData[position]['completed'].toString())
+                        ],
+                      ),
+                    ]),
+                  ],
+                )),
+          );
+        },
+      ),
+    ));
+  }
+}
+
+class RecordScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Record screen'),
+    );
+  }
+}
+
+class ProfileScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Profile screen'),
     );
   }
 }
