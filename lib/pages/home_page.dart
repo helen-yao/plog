@@ -78,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           Spacer(),
                           Column(
-                            children: [
+                            children: [ //TODO: change to average pace and only display when completed = true
                               Text("Pace"),
                               Text(
                                 '${_userData[position]['pace'].toString()} /hour',
