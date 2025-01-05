@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:plog/pages/register_page.dart';
+import 'package:plog/auth/login_or_register.dart';
 import 'package:plog/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
-
-import 'pages/login_page.dart';
 
 void main() {
   runApp(
@@ -22,9 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Plog',
-      home: LoginPage(
-        onTap: () {}
-      ),
+      home: LoginorRegister(),
       theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
