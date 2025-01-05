@@ -6,7 +6,7 @@ class HomeScreen extends StatelessWidget {
       'name': 'Helen',
       'time_elapsed': 21,
       'completed': false,
-      'date': '12/1/2003',
+      'start_date': DateTime.utc(2003,12,1),
       'title': 'Santorini',
       'description': 'The sky was really diffcult',
       'pace': 200
@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
       'name': 'Larissa',
       'time_elapsed': 21,
       'completed': false,
-      'date': '1/5/2025',
+      'start_date': DateTime.utc(2025,1,5),
       'title': 'The Great Gatsby',
       'description': 'Super fun puzzle',
       'pace': 30
@@ -32,38 +32,69 @@ class HomeScreen extends StatelessWidget {
         shrinkWrap: true,
         itemCount: 2,
         itemBuilder: (context, position) {
+          var progress = "";
+          if (_userData[position]['completed']) {
+            progress = "Completed";
+          } else {
+            progress = "In Progress";
+          }
           return Card(
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(0),
             ),
+            color: Theme.of(context).colorScheme.surface,
             child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                // child: Text(
-                //   _userData[position]['name'].toString(),
-                //   style: TextStyle(fontSize: 22.0),
-                // ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(_userData[position]['name'].toString()),
+                    Text(_userData[position]['name'].toString(),
+                        style: TextStyle(fontWeight: FontWeight.w700)),
+                    Text("Started on: ${_userData[position]['start_date']}",
+                        style: TextStyle(fontSize:10)),
                     Text("${_userData[position]['title']}",
-                        style: TextStyle(fontSize: 30)),
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.w700)),
+                    Text(_userData[position]['description'].toString()),
+                    SizedBox(height: 10),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Time"),
-                          Text(_userData[position]['time_elapsed'].toString())
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text("Completed"),
-                          Text(_userData[position]['completed'].toString())
-                        ],
-                      ),
-                    ]),
+                          Column(
+                            children: [
+                              Text("Time"),
+                              Text(
+                                _userData[position]['time_elapsed'].toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700, fontSize: 15),
+                              )
+                            ],
+                          ),
+                          Spacer(),
+                          Column(
+                            children: [
+                              Text("Completed"),
+                              Text(
+                                progress,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700, fontSize: 15),
+                              )
+                            ],
+                          ),
+                          Spacer(),
+                          Column(
+                            children: [
+                              Text("Pace"),
+                              Text(
+                                '${_userData[position]['pace'].toString()} /hour',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700, fontSize: 15),
+                              )
+                            ],
+                          ),
+                          Spacer(),
+                        ]),
                   ],
                 )),
           );
