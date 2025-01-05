@@ -32,12 +32,6 @@ class HomeScreen extends StatelessWidget {
         shrinkWrap: true,
         itemCount: 2,
         itemBuilder: (context, position) {
-          var progress = "";
-          if (_userData[position]['completed']) {
-            progress = "Completed";
-          } else {
-            progress = "In Progress";
-          }
           return Card(
             elevation: 0,
             shape: RoundedRectangleBorder(
@@ -76,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                             children: [
                               Text("Completed"),
                               Text(
-                                progress,
+                                _userData[position]['completed'] ? 'Completed' :'In Progress',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700, fontSize: 15),
                               )
